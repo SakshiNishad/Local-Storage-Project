@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h2>Registration</h2>
+
+            <form action="#">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Enter your Name">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Enter your Email">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Please Enter Your Password">
+                </div>
+
+                <div class="text-center">
+                    <button type="button" onclick="saveData()" class="btn btn-secondary" id="save_btn">Register</button>
+                    <button type="reset" class="btn btn-warning" id="save_btn">Reset</button>
+
+                    <div>
+                        <a class="login" href="login.html">click here to Login</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+<script>
+    function saveData(){
+        let name, email, password;
+        name= document.getElementById("name").value;
+        email= document.getElementById("email").value;
+        password= document.getElementById("password").value;
+        // console.log(name + email + password);
+
+        // localStorage.setItem("name", name);
+        // localStorage.setItem("email", email);
+        // localStorage.setItem("password", password);  here each entry will replace another entry
+
+        //array to keep all records
+
+        let user_records = new Array();
+        user_records= JSON.parse(localStorage.getItem("users"))? JSON.parse(localStorage.getItem("users")):[]  //parse convert string into object
+        if(user_records.some((v)=>{
+            return v.email==email
+        })){
+            alert("Duplicate Data!")
+        }
+
+        else{
+            user_records.push({
+                "name" : name,
+                "email" : email,
+                "password" : password
+            })
+
+            localStorage.setItem("users",JSON.stringify(user_records));  //stringify convert object into string
+        }
+    }
+</script>
+</html>
